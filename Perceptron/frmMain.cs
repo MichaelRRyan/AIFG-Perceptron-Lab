@@ -45,28 +45,35 @@ namespace Perceptron
             w1 = 1;
             w2 = 0.5;
 
+            // Loop for the specified number of iterations.
             for (int iterations = 0; iterations < maxIterations; ++iterations)
             {
                 bool error = false;
 
+                // Loop for each sample.
                 for (int i = 0; i < samples.Count; ++i)
                 {
+                    // Get the result of the perceptron with the sample values.
                     double result = (x0 * w0) + (samples[i].X1 * w1) + (samples[i].X2 * w2);
                     double y = (result > 0) ? 1.0 : -1.0; 
 
+                    // If the sample didn't match the desired result.
                     if (samples[i].Class != y)
                     {
                         error = true;
+
+                        // Recalculates the weights.
                         w0 += eta * (samples[i].Class - y) * x0;
                         w1 += eta * (samples[i].Class - y) * samples[i].X1;
                         w2 += eta * (samples[i].Class - y) * samples[i].X2;
                     }
                 }
 
+                // Draws the graph.
                 objGraphics.Clear(Color.White);
                 DrawSeparationLine();
 
-                if (!error) break;
+                if (!error) break; // If no errors occured, breaks from the loop.
             }
 
 
